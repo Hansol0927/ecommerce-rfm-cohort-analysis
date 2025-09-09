@@ -18,7 +18,7 @@ project_rfm_cohort/
 ├─ README.md # 프로젝트 소개 문서
 ├─ ecommerce-rfm-cohort.ipynb # 전체 분석 코드 (EDA → RFM → 군집화 → Cohort)
 └─ data/
-└─ S_PJT06_DATA_rfm.csv # 원본 데이터 (부트캠프 제공)
+└─ sample_ecommerce_rfm.csv (부트캠프 제공)
 ```
 ---
 
