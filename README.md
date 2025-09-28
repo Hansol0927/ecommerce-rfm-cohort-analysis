@@ -18,7 +18,7 @@ project_rfm_cohort/
 ├─ README.md # 프로젝트 소개 문서
 ├─ ecommerce-rfm-cohort.ipynb # 전체 분석 코드 (EDA → RFM → 군집화 → Cohort)
 └─ data/
-└─ sample_ecommerce_rfm.csv (부트캠프 제공)
+└─ sample_ecommerce_rfm.csv (재현용 샘플 데이터 (100행)
 ```
 ---
 
@@ -31,52 +31,65 @@ project_rfm_cohort/
 
 ## 📄 분석 및 모델링 과정
 ### 1. 데이터 전처리
-- Null 값 제거 (CustomerID 기준)
+- CustomerID Null 값 제거
 - Quantity, UnitPrice 음수값 제거
+- 이상치(대량 주문·고가 상품)는 VIP/B2B 거래로 판단, 제거하지 않고 분석에 포함
 - 고객별 Recency·Frequency·Monetary 지표 생성
 
 ### 2. RFM 분석
 - R/F/M 지표 min-max 스케일링 후 Score 산출 (0~100점)  
-- Rule-based 등급화 (Very Strong ~ Very Weak, 5등급)  
-- 등급별 고객 수 vs 매출 기여율 비교 → **소수 VIP에 과도한 매출 의존 확인**
+- Rule-based 5등급 분류 (Very Strong ~ Very Weak)
+- 결과:  
+  - 상위 20% 고객이 매출의 약 **66.5%** 기여  
+  - 고객 수가 가장 많은 Normal 그룹은 매출 기여가 낮음  
+  - 전형적인 **파레토(20:80) 구조** 확인  
 
 ### 3. K-means 군집화
 - Feature: Recency, Frequency, Monetary  
 - Elbow & Silhouette → 최적 K=4 선정  
 - Cluster 특성:  
-  - Cluster 0: 충성 고객군  
-  - Cluster 1: 저관여 고객군  
-  - Cluster 2: 신규·잠재 고객군  
-  - Cluster 3: 휴면·이탈 고객군  
+  - Cluster 0: Core Value (핵심 활동 고객군, 매출 80% 차지)
+  - Cluster 1: At-Risk (이탈 위험 고객군, 매출 5%) 
+  - Cluster 2: Growth (신규 성장 고객군, 매출 12%)  
+  - Cluster 3: Dormant (휴면 고객군, 매출 3%)
+*  Rule-based Normal 그룹을 Core Value / At-Risk / Growth로 재구성 → 차별화된 전략 도출
 
 ### 4. Cohort 분석
-- CohortMonth & CohortIndex 산출  
-- 고객 잔존율(리텐션) Heatmap 시각화  
-- **공통 패턴**: 첫 달 이후 급격한 이탈, 일부 Cohort에서 재활성화 반등 확인  
-
+- CohortMonth, CohortIndex 산출 후 리텐션율(잔존율) 계산  
+- 전체 고객 공통 패턴:  
+  - 첫 달 이탈률 급격히 높음 → 온보딩·재구매 유도 필요  
+  - 일부 Cohort에서 2~4개월차 재활성화 반등 발생  
+- Cluster별 차이:  
+  - Core Value: 1개월차 평균 잔존율 30% 이상 (안정적)  
+  - Growth: 낮은 초기 유지율, 후반 반등 여지 있음  
+  - At-Risk: 초기 급격한 이탈 (평균 15%)  
+  - Dormant: 장기 유지 불가, ROI 낮음  
 ---
 
 ## 📄 주요 결과
 - **RFM 분석**: 고객 기반은 소수 VIP 중심의 파레토(20:80) 구조  
-- **K-means**: Rule-based Normal 그룹을 더 세밀하게 나눠 실행 가능한 전략 도출  
-- **Cohort**: 온보딩 실패 → 첫 달 급격한 이탈, 재구매 유도 필요  
+- **K-means**: Rule-based 단순 구간화 대비 정교한 세분화 → 실행 가능한 전략 도출  
+- **Cohort**: 첫 달 이탈이 공통 문제, 일부 고객군은 재활성화 가능성 존재  
+
 
 ---
 
-## 📄 인사이트 & 기대 효과
-- **충성 고객군(Cluster 0)**: VIP 관리 강화 → 매출 안정성 확보  
-- **저관여 고객군(Cluster 1)**: 리마인드·프로모션 → 활동성 회복  
-- **신규 고객군(Cluster 2)**: 온보딩·첫 구매 프로모션 → 재구매 유도  
-- **휴면 고객군(Cluster 3)**: 재활성화 캠페인 → 비용 효율적 관리  
+## 📄 인사이트 & 기대 효과  
 
-▶ **기대 효과**  
-- 충성 고객 리텐션 강화 → 핵심 매출 유지  
-- 신규/저관여 고객 활성화 → 고객 모수 확대  
-- 휴면 고객 관리 효율화 → 비용 최적화  
+### 클러스터별 전략 제안  
+- **Core Value (Cluster 0)**: VIP 관리·리워드 강화 → 매출 안정성 확보  
+- **At-Risk (Cluster 1)**: 리마인드·쿠폰 제공 → 이탈 방어  
+- **Growth (Cluster 2)**: 온보딩·첫 구매 프로모션 → 전환 촉진  
+- **Dormant (Cluster 3)**: 저비용 자동화 관리, ROI 고려한 선택적 대응  
+
+### 기대 효과  
+- 충성 고객 리텐션 강화 → **핵심 매출 유지**  
+- 신규/저관여 고객 활성화 → **고객 모수 확대**  
+- 휴면 고객 관리 효율화 → **비용 최적화**  
 
 ---
 
-## 📄 기술 스택
+## 📄 기술 스택  
 - **Python**: Pandas, NumPy, Scikit-learn  
 - **Visualization**: Matplotlib, Seaborn  
 - **분석 환경**: Jupyter Notebook (Google Colab)  
@@ -84,5 +97,5 @@ project_rfm_cohort/
 
 ---
 
-## 📄 참고
-- 본 프로젝트는 **학습·포트폴리오 목적으로 진행**되었으며, 실제 기업 데이터가 아님을 명시합니다.
+## 📄 참고  
+본 프로젝트는 **학습·포트폴리오 목적으로 진행**되었으며, 실제 기업 데이터가 아님을 명시합니다.  
