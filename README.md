@@ -77,15 +77,15 @@ project_rfm_cohort/
 ## 📄 인사이트 & 기대 효과  
 
 ### 클러스터별 전략 제안  
-- **Core Value (Cluster 0)**: VIP 관리·리워드 강화 → 매출 안정성 확보  
-- **At-Risk (Cluster 1)**: 리마인드·쿠폰 제공 → 이탈 방어  
-- **Growth (Cluster 2)**: 온보딩·첫 구매 프로모션 → 전환 촉진  
-- **Dormant (Cluster 3)**: 저비용 자동화 관리, ROI 고려한 선택적 대응  
+- **Core Value (Cluster 0)**: VIP 멤버십·장기 리워드 / **행동 패턴을 다른 고객군에 확산** → 매출 안정성 확보  
+- **At-Risk (Cluster 1)**: 장바구니 리마인드·자동화 케어 플로우 / 불만족 요인 개선 → 이탈 방어  
+- **Growth (Cluster 2)**: 온보딩 프로세스 강화 / **Cohort 기반 2~4개월차 집중 프로모션** / Cross-sell·Up-sell  → 전환 촉진  
+- **Dormant (Cluster 3)**: 저비용 자동화 관리 / 과거 Core Value 경험 고객 선택적 집중 / ROI 고려한 선택적 대응  
 
 ### 기대 효과  
-- 충성 고객 리텐션 강화 → **핵심 매출 유지**  
-- 신규/저관여 고객 활성화 → **고객 모수 확대**  
-- 휴면 고객 관리 효율화 → **비용 최적화**  
+- Core Value 고객 리텐션 강화 → 핵심 매출 안정성 확보  
+- Growth·At-Risk 활성화 → 매출 성장 및 구조 다변화  
+- Dormant 효율적 관리 → 비용 최적화  
 
 ---
 
